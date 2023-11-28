@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
-
 class RegisteredUserController extends Controller
 {
     /**
@@ -37,9 +36,6 @@ class RegisteredUserController extends Controller
                 'slogan' => ['required', 'string', 'max:50'],
                 'logo' => ['required', 'string', 'max:255'],
                 'role' => ['required', 'string', 'max:50'],
-                
-
-
             ]);
         }elseif($request->role === 'client'){
             $request->validate([
@@ -53,40 +49,35 @@ class RegisteredUserController extends Controller
             ]);
         }else{
             $request->validate([
-                'nom' => ['required', 'string', 'max:30'],
-                'prenom' => ['required', 'string', 'max:50'],
-                'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-                'password' => ['required', 'confirmed', Rules\Password::defaults()],
-                'telephone' => ['required', 'string', 'max:50'],
-                'slogan' => ['required', 'string', 'max:50'],
-                'logo' => ['required', 'string', 'max:255'],
                 'role' => ['required', 'string', 'max:50'],
-
             ]);
         }
-            $user = User::create([
-                'nom' => $request->nom,
-                'prenom' => $request->prenom,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-                'telephone' => $request->telephone,
-                'slogan' => $request->slogan,
-                'logo' => '',
-            ]);
-            if ($request->file('logo')) {
-                $file = $request->file('logo');
-                $logoContent = file_get_contents($file->getRealPath());
-                $user->update(['logo' => $logoContent]);
-            }
+
+        $user = new User();
+        
+        $user->nom = $request->nom;
+        $user->prenom = $request->prenom;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->telephone = $request->telephone;
+        $user->slogan = $request->slogan;
+        $user->role = $request->role;
+        if($request->file('logo')){
+            $file= $request->file('logo');
+            $filename= date('YmdHi').$file->getClientOriginalName();
+            $file-> move(public_path('public/images'), $filename);
+            $user['logo']= $filename;
+        }
+        $user->save();
             
             event(new Registered($user));
 
             Auth::login($user);
 
             if ($request->role === 'association') {
-                return redirect()->route('association.index');
+                return redirect()->route('association.index', ['id' => $user->id]);
             } elseif($request->role === 'client') {
-                return redirect()->route('client.index');
+                return redirect()->route('client.index', ['id' => $user->id]);
             }
         }
         

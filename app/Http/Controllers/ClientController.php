@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ClientController extends Controller
 {
@@ -12,7 +13,8 @@ class ClientController extends Controller
      */
     public function index()
     {
-        return view('client.index');
+        $user = Auth::user();
+        return view('client.index',compact('user'));
     }
 
     /**

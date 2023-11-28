@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AssociationController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\EvenementController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,18 +17,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/',[EvenementController::class, 'acceuil'])->name('acceuil');
+Route::get('/apropos',[EvenementController::class, 'apropos'])->name('apropos');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth','role:association')->group(function () {
+Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+Route::middleware('auth','role:association')->group(function () {
     Route::get('/indexAssociation{id}', [AssociationController::class, 'index'])->name('association.index');
 });
 Route::middleware('auth','role:client')->group(function () {

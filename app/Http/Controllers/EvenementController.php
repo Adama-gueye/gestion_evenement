@@ -12,7 +12,16 @@ class EvenementController extends Controller
      */
     public function index()
     {
-        //
+    }
+
+    public function acceuil()
+    {
+        return view('index');
+    }
+
+    public function apropos()
+    {        
+        return view('about-us');
     }
 
     /**
