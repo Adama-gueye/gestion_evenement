@@ -4,6 +4,7 @@ use App\Http\Controllers\AssociationController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\EvenementController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReservationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,9 +32,16 @@ Route::middleware('auth')->group(function () {
 });
 Route::middleware('auth','role:association')->group(function () {
     Route::get('/indexAssociation{id}', [AssociationController::class, 'index'])->name('association.index');
+    Route::post('/evenementStore', [EvenementController::class, 'store'])->name('evenement.store');
+    Route::get('/evenementShow{id}', [EvenementController::class, 'show'])->name('evenement.show');
+    Route::delete('/evenementDestroy{id}', [EvenementController::class, 'destroy'])->name('evenement.destroy');
+    Route::patch('/evenementUpdate{id}', [EvenementController::class, 'update'])->name('evenement.update');
+    Route::patch('/reservation/{id}', [ReservationController::class,'changeEtat'])->name('reservation.changeEtat');
 });
 Route::middleware('auth','role:client')->group(function () {
     Route::get('/indexClient{id}', [ClientController::class, 'index'])->name('client.index');
+    Route::get('/reservation{id}', [ReservationController::class, 'index'])->name('reservation.index');
+    Route::post('/reservationStore', [ReservationController::class, 'store'])->name('reservation.store');
 });
 
 require __DIR__.'/auth.php';

@@ -29,35 +29,35 @@
     <main class="page">
         <section class="clean-block about-us">
             <div class="container">
-                <div class="block-heading">
-                    <h2 class="text-info">About Us</h2>
-                    <p>Une résidence élégante et moderne située au cœur de la ville, offrant un confort exceptionnel et des équipements de luxe. Cette propriété unique combine un design contemporain avec des espaces de vie spacieux. Profitez de la tranquillité dans un environnement soigneusement conçu, idéal pour une vie urbaine sophistiquée.</p>
+                <div class="row justify-content-center">
+
+                @foreach($evenements as $evenement)
+                    <div class="card alert alert-primary" style="max-width: 20rem;">
+                        <div class="card text-center clean-card position-relative"><img class="card-img-top w-100 d-block" src="{{url('public/images/'.$evenement->image) }}">
+                        <a href="{{ route('reservation.index', ['id' => $evenement->id]) }}" class="btn btn-success position-absolute top-50 start-50 translate-middle" style="opacity: 0.8;">Reserver</a></div>
+                            <hr>
+                             <p style="text-align:center">INFOS</p>
+                            <hr>
+                            <div class="card-body">
+                                <p class="card-text">Libelle : {{$evenement->libelle}}</p>
+                                <p class="card-text">Description : {{$evenement->description}}</p>
+                                <p class="card-text">Date Limite Inscription : {{$evenement->date_limite_inscription}}</p>
+                                <p class="card-text">Date Evènement : {{$evenement->date_evenement}}</p>
+                                <p class="card-text">Etat : {{$evenement->etat}}</p>
+                                <p class="card-text">Organisateur : {{$evenement->user->nom}}</p>
+                            </div>
+                            <hr>
+                        </div>
+                    <div class="col-md-1"></div>
+                @endforeach
                 </div>
             </div>
         </section>
     </main>
-    <footer class="page-footer dark">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-3">
-                    <h5>Get started</h5>
-                    <ul>
-                        <li><a href="#">ACCUEIL</a></li>
-                        <li><a href="#">A&nbsp; PROPOS</a></li>
-                        <li><a href="#">CONNECTION</a></li>
-                    </ul>
-                </div>
-                
-            </div>
-        </div>
-        <div class="footer-copyright">
-            <p>© 2023 Copyright Text</p>
-        </div>
-    </footer>
+</body>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
     <script src="assets/js/vanilla-zoom.js"></script>
     <script src="assets/js/theme.js"></script>
-</body>
 
 </html>

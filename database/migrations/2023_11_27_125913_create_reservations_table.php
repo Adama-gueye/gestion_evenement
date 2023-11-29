@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
             $table->string('reference');
-            $table->enum('etat',['accept','pas accept']);
+            $table->enum('etat',['accepter','décliner']);
             $table->integer('nbre');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');

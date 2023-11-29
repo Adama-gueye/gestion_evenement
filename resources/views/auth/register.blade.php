@@ -1,6 +1,35 @@
 @include('header')
 
 <x-guest-layout>
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>About Us - Brand</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
+    <link rel="stylesheet" href="assets/fonts/simple-line-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css">
+    <link rel="stylesheet" href="assets/css/vanilla-zoom.min.css">
+</head>
+
+<body style="background-color: blanchedalmond;">
+    <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar">
+        <div class="container"><a class="navbar-brand logo" href="#">Immobilier</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navcol-1">
+                <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="{{route('acceuil')}}">Accueil</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="{{route('apropos')}}" >a propos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{route('login')}}">connection</a></li>
+                    <li class="nav-item"></li>
+                    <li class="nav-item"></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
     <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
         @csrf
 
@@ -70,11 +99,9 @@
             <x-input-error :messages="$errors->get('logo')" class="mt-2" />
         </div>
         <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('login') }}">
-                {{ __('Already registered?') }}
-            </a>
+            <a class="btn btn-secondary me-3" href="{{ route('login') }}">Connexion</a>
             <x-primary-button class="ms-4">
-                {{ __('Register') }}
+                {{ __('Inscrire') }}
             </x-primary-button>
         </div>
     </form>

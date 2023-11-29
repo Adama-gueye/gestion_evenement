@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('libelle');
             $table->date('date_limite_inscription');
             $table->string('description');
-            $table->string('image_mise_en_avant');
+            $table->string('image');
             $table->date('date_evenement');
             $table->enum('etat',['cloturer','pas cloturer']);
             $table->unsignedBigInteger('user_id');

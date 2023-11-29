@@ -28,6 +28,12 @@ class User extends Authenticatable
         'logo'
 
     ];
+    function evenements() {
+        return $this->hasMany(Evenement::class);
+     }
+     function reservations() {
+        return $this->belongsToMany(User::class, 'reservations', 'user_id', 'evenement_id');
+     }
 
     /**
      * The attributes that should be hidden for serialization.

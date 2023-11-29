@@ -62,11 +62,11 @@ class RegisteredUserController extends Controller
         $user->telephone = $request->telephone;
         $user->slogan = $request->slogan;
         $user->role = $request->role;
-        if($request->file('logo')){
-            $file= $request->file('logo');
+        if($request->file('image')){
+            $file= $request->file('image');
             $filename= date('YmdHi').$file->getClientOriginalName();
             $file-> move(public_path('public/images'), $filename);
-            $user['logo']= $filename;
+            $user['image']= $filename;
         }
         $user->save();
             

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Association;
+use App\Models\Evenement;
+use App\Models\Reservation;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,7 +17,9 @@ class AssociationController extends Controller
     public function index()
     {
         $user = Auth::user();
-        return view('associations.index',compact('user'));
+        $evenements = Evenement::all();
+        $reservations = Reservation::all();
+        return view('associations.index',compact('user','evenements','reservations'));
     }
 
     /**
