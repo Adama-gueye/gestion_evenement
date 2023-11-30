@@ -3,6 +3,15 @@
     <h1>BIENVENUE SUR LA PAGE DE MODIFICATION D'EVENEMENT {{$user->nom}}</h1>
     <h2>Formulaire Événement</h2>
     <form method="post" action="{{route('evenement.update',$evenement->id)}}" enctype="multipart/form-data">
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
         @csrf
         <div class="mb-3">
             <label for="libelle" class="form-label">Libellé</label>

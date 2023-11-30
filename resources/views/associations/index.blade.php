@@ -8,6 +8,15 @@
 </div>
 
 <div class="container mt-5">
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
     <h2>Liste de vos Événements</h2>
     <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#AjoutEvenement">
   Ajout Evénement
@@ -21,7 +30,7 @@
             <th scope="col">Description</th>
             <th scope="col">Date Événement</th>
             <th scope="col">État</th>
-            <!-- <th scope="col">Organisateur</th> -->
+            <th scope="col">Action</th>
         </tr>
         </thead>
         <tbody>
@@ -31,13 +40,7 @@
                         <td><img src="{{ url('public/images/'.$evenement->image) }}" width="70" height="70" class="img img-responsive" alt=""></td>
                         <td>{{$evenement->libelle}}</td>
                         <td>{{$evenement->date_limite_inscription}}</td>
-                        <td>
-                            @if(strlen($evenement->description) > 7)
-                                {{ Illuminate\Support\Str::limit($evenement->description, 10, '...') }}
-                            @else
-                                {{ $evenement->description }}
-                            @endif
-                        </td>
+                        <td>{{ $evenement->description }}</td>
                         <td>{{$evenement->date_evenement}}</td>
                         <td>{{$evenement->etat}}</td>
                         <td>
@@ -120,6 +123,7 @@
                 <th scope="col">Client</th>
                 <th scope="col">Etat</th>
                 <th scope="col">ChangeEtat</th>
+                <th scope="col">Action</th>
             </tr>
         </thead>
         <tbody>
@@ -139,8 +143,7 @@
                         </td>
                         <td>
                             <div class="btn-group" role="group">
-                                <a href="" class="btn btn-outline-primary">✍🏾</a>
-                            <form method="POST" action="" accept-charset="UTF-8" style="display:inline">
+                            <form method="POST" action="{{ route('reservation.destroy',$reservation->id)}}" accept-charset="UTF-8" style="display:inline">
                                 {{ method_field('DELETE') }}
                                 {{ csrf_field() }}
                                 <button type="submit" class="btn btn-outline-primary" onclick="return confirmDelete()" title="Supprimer Evenement">✖</button>

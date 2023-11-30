@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\Message;
+use App\Mail\Refus;
 use App\Models\Evenement;
 use App\Models\Reservation;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class ReservationController extends Controller
 {
@@ -61,18 +65,46 @@ class ReservationController extends Controller
         $reservation->etat = 'accepter';
         $reservation->user_id = $user->id;
         $reservation->save();
-
+        $succes = [
+            'title' => 'Mail from Webappfix',
+            'body' => 'This is for testing email usign smtp',
+        ];
+        Mail::to($user->email)->send(new Message($succes));
         return redirect()->route("client.index",$user->id);
     }
 
     public function changeEtat($id)
     {
         $user = Auth::user();
+        $users = User::all();  
+
         $reservation = Reservation::find($id);
-        if($reservation->etat==='accepter')
-            $reservation->etat = 'décliner';
-        else
-            $reservation->etat = 'accepter';
+        if($reservation->etat==='accepter'){
+            foreach ($users as $userClient) {
+                if($reservation->user_id === $userClient->id){
+                    $reservation->etat = 'décliner';
+                    $refus = [
+                        'title' => 'Mail from Webappfix',
+                        'body' => 'This is for testing email usign smtp',
+                    ];
+                    Mail::to($userClient->email)->send(new Refus($refus));
+                }
+        
+            }
+        }
+        else{
+            foreach ($users as $userClient) {
+                if($reservation->user_id === $userClient->id){
+                    $reservation->etat = 'accepter';
+                    $accept = [
+                        'title' => 'Mail from Webappfix',
+                        'body' => 'This is for testing email usign smtp',
+                    ];
+                    Mail::to($userClient->email)->send(new Message($accept));
+                    }
+                }
+            
+            }
         $reservation->save();
         return redirect()->route('association.index',$user->id)->with('success', 'État de la réservation modifié avec succès.');;
     }
@@ -104,8 +136,10 @@ class ReservationController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Reservation $reservation)
+    public function destroy($id)
     {
-        //
+        $user = Auth::user();
+        Reservation::find($id)->delete();
+        return redirect()->route('association.index',$user->id);
     }
 }

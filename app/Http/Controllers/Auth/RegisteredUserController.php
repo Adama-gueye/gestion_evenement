@@ -43,7 +43,7 @@ class RegisteredUserController extends Controller
                 'prenom' => ['required', 'string', 'max:50'],
                 'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
                 'password' => ['required', 'confirmed', Rules\Password::defaults()],
-                'telephone' => ['required', 'string', 'max:50'],
+                'telephone' => ['required', 'string', 'max:15', 'regex:/^\+(?:[0-9] ?){6,14}[0-9]$/'],
                 'role' => ['required', 'string', 'max:50'],
 
             ]);

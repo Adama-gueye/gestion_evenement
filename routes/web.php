@@ -37,6 +37,7 @@ Route::middleware('auth','role:association')->group(function () {
     Route::delete('/evenementDestroy{id}', [EvenementController::class, 'destroy'])->name('evenement.destroy');
     Route::patch('/evenementUpdate{id}', [EvenementController::class, 'update'])->name('evenement.update');
     Route::patch('/reservation/{id}', [ReservationController::class,'changeEtat'])->name('reservation.changeEtat');
+    Route::delete('/reservationDestroy/{id}', [ReservationController::class,'destroy'])->name('reservation.destroy');
 });
 Route::middleware('auth','role:client')->group(function () {
     Route::get('/indexClient{id}', [ClientController::class, 'index'])->name('client.index');

@@ -33,7 +33,7 @@
 
                 @foreach($evenements as $evenement)
                     <div class="card alert alert-primary" style="max-width: 20rem;">
-                        <div class="card text-center clean-card position-relative"><img class="card-img-top w-100 d-block" src="{{url('public/images/'.$evenement->image) }}">
+                        <div class="card text-center clean-card position-relative"><img class="card-img-top w-100 d-block" src="{{url('public/images/'.$evenement->image) }}" style="height: 200px; object-fit: cover;">
                         <a href="{{ route('reservation.index', ['id' => $evenement->id]) }}" class="btn btn-success position-absolute top-50 start-50 translate-middle" style="opacity: 0.8;">Reserver</a></div>
                             <hr>
                              <p style="text-align:center">INFOS</p>

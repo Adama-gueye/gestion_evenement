@@ -11,8 +11,16 @@
 <div class="container mt-5">
     <h2>Veuillez passer votre reservation {{$user->nom}}</h2>
     <form action="{{ route('reservation.store') }}" method="POST">
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         @csrf
-
         <div class="form-group">
             <label for="reference">Référence:</label>
             <input type="text" class="form-control" id="reference" name="reference" required>

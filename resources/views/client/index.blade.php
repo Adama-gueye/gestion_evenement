@@ -39,14 +39,18 @@
                 </div>
 
                 <div class="row">
-                    @foreach($evenements as $evenement)
-                        <div class="col-sm-6 col-lg-4 mb-4">
-                            <div class="card text-center clean-card position-relative">
-                                <img class="card-img-top w-100 d-block" src="{{url('public/images/'.$evenement->image) }}">
-                                <a href="{{ route('reservation.index', ['id' => $evenement->id]) }}" class="btn btn-success position-absolute top-50 start-50 translate-middle" style="opacity: 0.8;">Réserver</a>
+                @foreach($evenements as $evenement)
+                    <div class="col-sm-6 col-lg-4 mb-4">
+                        <div class="card text-center clean-card position-relative">
+                            <img class="card-img-top w-100 d-block" src="{{url('public/images/'.$evenement->image) }}" style="height: 200px; object-fit: cover;">
+                            <div class="card-body">
+                                <h5 class="card-title">{{$evenement->libelle}}</h5>
+                                <p class="card-text">{{$evenement->description}}</p>
+                                <a href="{{ route('reservation.index', ['id' => $evenement->id]) }}" class="btn btn-success">Réserver</a>
                             </div>
                         </div>
-                    @endforeach
+                    </div>
+                @endforeach
                 </div>
             </div>
         </section>
